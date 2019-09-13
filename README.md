@@ -17,3 +17,8 @@ Map the ESP onto the density
 ~~~~
 map_esp dens.cube, esp.cube
 ~~~~
+
+Information about all the contained functions and options
+~~~~
+dens_plot_help
+~~~~
