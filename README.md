@@ -7,6 +7,8 @@ Note: these tools are still at a very rudimentary stage.
 
 If you have any additions or improvements, please send me a pull request.
 
+![](https://1.bp.blogspot.com/-dA89ETk2Qcs/XYH94lK_j9I/AAAAAAAACPE/7iiaOp6cId4-pIcjCCCscmxKvq3Nb6SEACLcBGAsYHQ/s320/esp15.png)
+
 ## Plotting of densities and electrostatic potentials
 
 Load the script file from the PyMOL console
