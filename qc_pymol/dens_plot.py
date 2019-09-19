@@ -1,8 +1,24 @@
+import glob
+from os import path
 from pymol import cmd, stored, colorramping
 
 # Set some defaults for colorramp here
 stored.ramp_vals = [-0.4,-0.08,-0.02, 0, 0.02, 0.08, 0.4]
 stored.ramp_cols = ["red","orange","yellow", "white", "cyan", "blue", "purple"]
+
+def dens_plot_init():
+    """
+    Initialise some settings for density export.
+    """
+    print("Initialising settings for dens_plot ...")
+    cmd.set("ray_opaque_background", 0)
+    cmd.set("specular_intensity", 0.)
+    cmd.set("depth_cue", "off")
+    cmd.set("transparency", 0.2)
+
+    cmd.set("stick_radius", 0.1)
+    cmd.show("sticks")
+    cmd.color("gray30", "ele c")
 
 def show_dens(fname, isovals="-0.02 0.02", colors="cyan orange"):
     """
@@ -13,7 +29,8 @@ def show_dens(fname, isovals="-0.02 0.02", colors="cyan orange"):
     Example:
      show_dens dens.cube, -0.03 0.03, red blue
     """
-    dname = fname.split('.')[0]
+    dname = path.splitext(fname)[0]
+    cmd.delete(dname + "*")
     cmd.load(fname, dname, zoom=0)
 
     il = isovals.split()
@@ -21,16 +38,27 @@ def show_dens(fname, isovals="-0.02 0.02", colors="cyan orange"):
     for i in range(len(il)):
         show_iso(dname, float(il[i]), cl[i])
 
-def save_dens(fname, isovals="-0.02 0.02", colors="cyan orange"):
+def save_dens(fname, isovals="-0.02 0.02", colors="cyan orange", delete=True):
     """
     Plot and save the density (same options as show_dens).
     """
-    dname = fname.split('.')[0]
+    dname = path.splitext(fname)[0]
     show_dens(fname, isovals, colors)
-    cmd.ray()
     pname = dname + ".png"
-    cmd.png(pname)
-    cmd.delete(fname.split('.')[0]+"*")
+    cmd.png(pname, ray=1)
+    print("Image saved as %s."%pname)
+    if delete:
+        cmd.delete(dname + "*")
+
+def save_dens_multi(regex, isovals="-0.02 0.02", colors="cyan orange"):
+    """
+    Plot and save multiple densities.
+    regex - Regular expressions for specifying files.
+    """
+    fnames = glob.glob(regex)
+    print "fnames:", fnames
+    for fname in fnames:
+        save_dens(fname, isovals, colors)
 
 def map_esp(dens, esp, iso=0.02):
     """
@@ -39,40 +67,30 @@ def map_esp(dens, esp, iso=0.02):
     esp  - File containing the ESP on a grid
     iso  - isovalue for the density
     """
-    ename = esp.split('.')[0]
-    dname = "d_%s"%ename
-    rname = "r_%s"%ename
+    ename = path.splitext(esp)[0]
+    dname = "esp_map" #"d_%s"%ename
+    rname = "esp_ramp" #"r_%s"%ename
 
     cmd.load(dens, dname, zoom=0)
     cmd.load(esp, ename, zoom=0)
 
     cmd.ramp_new(rname, ename, stored.ramp_vals, stored.ramp_cols)
 
-    show_iso(dname, iso, rname)
+    show_iso(dname, float(iso), rname)
 
-# def set_iso_color(ic_string):
-#     """
-#     Set isovalues and colors, as specified by ic_string, e.g.
-#       set_iso_color, 0.01 cyan -0.01 orange
-#     """
-#     stored.isocol = []
-#     ic = ic_string.split()
-#     while(len(ic)>0):
-#         iso   = float(ic.pop(0))
-#         color = ic.pop(0)
-#         stored.isocol.append((iso, color))
-#     print stored.isocol
+cmd.extend("dens_plot_init", dens_plot_init)
+cmd.extend("show_dens", show_dens)
+cmd.extend("save_dens", save_dens)
+cmd.extend("save_dens_multi", save_dens_multi)
+cmd.extend("map_esp", map_esp)
 
 def dens_plot_help():
+    help(dens_plot_init)
     help(show_dens)
     help(save_dens)
     help(map_esp)
 
 cmd.extend("dens_plot_help", dens_plot_help)
-cmd.extend("show_dens", show_dens)
-cmd.extend("save_dens", save_dens)
-cmd.extend("map_esp", map_esp)
-#cmd.extend("set_iso_color", set_iso_color)
 
 # internal functions
 def show_iso(dname, iso, color="white"):
