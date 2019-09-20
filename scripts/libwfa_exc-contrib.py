@@ -6,15 +6,15 @@ Load molecular geometry first, then run save_all()
 """
 
 from pymol import cmd
-import dens_plot
+from qc_pymol import dens_plot
 
 ###
 # Global variables
 geom  = "geom.mol" # File with molecular coordinates
-iso_dens = "-0.002 0.002" # Isovalues for densities
+#iso_dens = "-0.002 0.002" # Isovalues for densities
+#iso_orb  = "-0.05 0.05" # Isovalues for orbitals
+iso_dens = "-0.005 0.005" # Isovalues for densities
 iso_orb  = "-0.05 0.05" # Isovalues for orbitals
-#iso_dens = "-0.01 0.01" # Isovalues for densities
-#iso_orb  = "-0.1 0.1" # Isovalues for orbitals
 iso_esp  = 0.05 # Isovalue for ESP map
 ###
 
@@ -35,7 +35,7 @@ def save_all(state, ihomo):
     ihomo - Index of HOMO
     """
     # Delete stuff left over from previous runs
-    cmd.delete("esp_map*")
+    cmd.delete("esp*")
     cmd.delete(state + "*")
 
     cmd.set("transparency", 0.2)
