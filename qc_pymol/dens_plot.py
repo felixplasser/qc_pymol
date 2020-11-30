@@ -56,7 +56,7 @@ def save_dens_multi(regex, isovals="-0.02 0.02", colors="cyan orange"):
     regex - Regular expressions for specifying files.
     """
     fnames = glob.glob(regex)
-    print "fnames:", fnames
+    print("fnames:", fnames)
     for fname in fnames:
         save_dens(fname, isovals, colors)
 
