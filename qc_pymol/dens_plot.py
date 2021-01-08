@@ -1,10 +1,19 @@
+'''
+Collection of routines for plotting densities and ESPs.
+
+(c) 2019 Felix Plasser, Loughborough University
+
+License: GPL-3.0
+'''
+
 import glob
 from os import path
 from pymol import cmd, stored, colorramping
 
 # Set some defaults for colorramp here
 stored.ramp_vals = [-0.4,-0.08,-0.02, 0, 0.02, 0.08, 0.4]
-stored.ramp_cols = ["red","orange","yellow", "white", "cyan", "blue", "purple"]
+#stored.ramp_cols = ["red", "orange", "yellow", "white", "cyan", "blue", "purple"]
+stored.ramp_cols = ["purple", "blue", "cyan", "white", "yellow", "orange", "red"]
 
 def dens_plot_init():
     """
@@ -20,7 +29,7 @@ def dens_plot_init():
     cmd.show("sticks")
     cmd.color("gray30", "ele c")
 
-def show_dens(fname, isovals="-0.02 0.02", colors="cyan orange"):
+def show_dens(fname, isovals="-0.02 0.02", colors="cyan orange", delete=True):
     """
     Show a density as isosurface.
      fname - Name of the file containing the isosurface on a grid
@@ -29,8 +38,9 @@ def show_dens(fname, isovals="-0.02 0.02", colors="cyan orange"):
     Example:
      show_dens dens.cube, -0.03 0.03, red blue
     """
-    dname = path.splitext(fname)[0]
-    cmd.delete(dname + "*")
+    dname = path.splitext(fname)[0] #.replace('singlet', 'S').replace('triplet', 'T')
+    if delete:
+        cmd.delete(dname + "*")
     cmd.load(fname, dname, zoom=0)
 
     il = isovals.split()
@@ -38,12 +48,13 @@ def show_dens(fname, isovals="-0.02 0.02", colors="cyan orange"):
     for i in range(len(il)):
         show_iso(dname, float(il[i]), cl[i])
 
+    return dname
+
 def save_dens(fname, isovals="-0.02 0.02", colors="cyan orange", delete=True):
     """
     Plot and save the density (same options as show_dens).
     """
-    dname = path.splitext(fname)[0]
-    show_dens(fname, isovals, colors)
+    dname = show_dens(fname, isovals, colors)
     pname = dname + ".png"
     cmd.png(pname, ray=1)
     print("Image saved as %s."%pname)
@@ -56,7 +67,7 @@ def save_dens_multi(regex, isovals="-0.02 0.02", colors="cyan orange"):
     regex - Regular expressions for specifying files.
     """
     fnames = glob.glob(regex)
-    print "fnames:", fnames
+    print("fnames:", fnames)
     for fname in fnames:
         save_dens(fname, isovals, colors)
 
