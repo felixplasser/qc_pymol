@@ -1,5 +1,5 @@
 # qc_pymol
-Scripts for using pymol together with quantum chemistry programs. So far this includes utilities for plotting densities and electrostatic potentials.
+Scripts for using pymol together with quantum chemistry programs. So far this includes utilities for plotting densities/electrostatic potentials and arrows for dipole moments.
 
 Author: Felix Plasser
 
