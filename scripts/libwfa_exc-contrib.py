@@ -1,8 +1,11 @@
 """
 Example script.
-This creates a plot representing the contributions to the energy in using files
-created by Q-Chem.
-Load molecular geometry first, then run save_all()
+This creates plots representing the contributions to the excitation energy
+  from files created by Q-Chem using libwfa, see
+  http://dx.doi.org/10.1039/D0CP00369G
+The script loads the molecular geometry first.
+Then run save_all() to save the pictures, e.g.
+   save_all T_1, 787
 """
 
 from pymol import cmd, stored
