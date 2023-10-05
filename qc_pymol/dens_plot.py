@@ -39,7 +39,7 @@ def show_dens(fname, isovals="-0.02 0.02", colors="cyan orange", delete="del"):
      fname - Name of the file containing the isosurface on a grid
      isovals - Space-separated string of iso Isovalues
      colors  - Space-separated string of colors
-     delete  - Set delete=del/keep delete (default) or keep any previous plots of this density
+     delete  - Set to del/keep to delete or keep any previous plots of this density
     Example:
      show_dens dens.cube, -0.03 0.03, red blue
     """
