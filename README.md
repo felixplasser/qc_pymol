@@ -1,9 +1,9 @@
 # qc_pymol
-Scripts for using pymol together with quantum chemistry programs. So far this includes utilities for plotting densities/electrostatic potentials and arrows for dipole moments.
+Scripts for using [PyMOL](https://pymol.org) together with quantum chemistry programs. So far this includes utilities for plotting densities/electrostatic potentials and arrows for dipole moments.
 
 *Author*: Felix Plasser
 
-Please use github Issues if you have any questions or suggestions.
+Please use [github Issues](https://github.com/felixplasser/qc_pymol/issues) if you have any questions or suggestions.
 Contributions to the code are very welcome (for example via a pull request).
 
 ![](https://1.bp.blogspot.com/-lyJBdoH-K7Q/XYH95JlMtWI/AAAAAAAACPI/JzvrxxqmucQ4akhMy8hSy3FaNgtwQCiuQCLcBGAsYHQ/s320/esp20.png)
