@@ -27,7 +27,7 @@ Map the ESP onto the density
 map_esp dens.cube, esp.cube
 ~~~~
 
-Plot all file with suffix `cube` using isovalues of `+/-0.005`
+Plot all files with suffix `cube` using isovalues of `+/-0.005`
 
 ~~~~
 save_dens_multi cube, -0.005 0.005
