@@ -3,8 +3,6 @@ Scripts for using pymol together with quantum chemistry programs. So far this in
 
 Author: Felix Plasser
 
-Note: these tools are still at a very rudimentary stage.
-
 If you have any additions or improvements, please send me a pull request.
 
 ![](https://1.bp.blogspot.com/-lyJBdoH-K7Q/XYH95JlMtWI/AAAAAAAACPI/JzvrxxqmucQ4akhMy8hSy3FaNgtwQCiuQCLcBGAsYHQ/s320/esp20.png)
@@ -12,9 +10,10 @@ If you have any additions or improvements, please send me a pull request.
 
 ## Plotting of densities and electrostatic potentials
 
-Load the script file from the PyMOL console
+Load the script file from the PyMOL console and initialize some settings
 ~~~~
 run <qc_pymol>/dens_plot.py
+dens_plot_init
 ~~~~
 
 Plot a density given as cube file
