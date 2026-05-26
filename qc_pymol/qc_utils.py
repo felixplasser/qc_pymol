@@ -10,8 +10,12 @@ from pymol import cmd
 from qc_pymol.external import cgo_arrow
 
 au2Ang = 0.529177249
+au2D   = 2.54174619
 
 def get_coord(v):
+    """
+    Parse the input string as a vector.
+    """
     if not isinstance(v, str):
         return v
     elif v.startswith('['):
@@ -19,7 +23,7 @@ def get_coord(v):
     else:
         return cmd.get_atom_coords(v)
 
-def plot_dip(dipvec, scale=1, radius=0.15, color="tv_green"):
+def plot_dip(dipvec, scale=1, radius=0.15, color="tv_green", offset=None):
     """
     Plot a dipole moment.
     dipvec - dipole moment vector in a.u.
@@ -29,6 +33,11 @@ def plot_dip(dipvec, scale=1, radius=0.15, color="tv_green"):
     dv = get_coord(dipvec)
     p1 = [-val * scale * au2Ang for val in dv]
     p2 = [ val * scale * au2Ang for val in dv]
+
+    if not offset is None:
+        offs = get_coord(offset)
+        p1 = [p1[i]+offs[i] for i in range(3)]
+        p2 = [p2[i]+offs[i] for i in range(3)]
 
     length = sum(val*val for val in dv)
     hlength = min(length/2., radius*3.0)
